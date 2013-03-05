@@ -11,7 +11,5 @@ build/
 bin/
 # ignore MacOSX Desktop Services Store files...
 .DS_Store
-# Ignore .classpath.  User must copy .classpath.<OS-specific> to .classpath.
-.classpath
 # Ignore anything stowed in a tmp directory
 tmp/
