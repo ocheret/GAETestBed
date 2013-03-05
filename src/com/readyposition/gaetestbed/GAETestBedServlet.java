@@ -14,7 +14,7 @@ public class GAETestBedServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException
     {
-        logger.info("GAETetBedServlet logger works!");
+        logger.info("SLF4J logger works!");
         resp.setContentType("text/plain");
         resp.getWriter().println("Hello, world");
     }
