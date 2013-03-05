@@ -9,6 +9,9 @@
 build/
 # ignore eclipse build artifacts
 bin/
+war/WEB-INF/classes/com/
+# ignore GAE DevKit artifacts
+local_db.bin
 # ignore MacOSX Desktop Services Store files...
 .DS_Store
 # Ignore anything stowed in a tmp directory
