@@ -14,7 +14,11 @@
     </header>
     <section>
       <h2>Blah, blah, blah...</h2>
-      <p>Blah, blah, blah...</p>
+      <ul>
+	<li><span class="label">One</span> is the first.</li>
+	<li><span class="label">Two</span> is the second.</li>
+	<li><span class="label">Three</span> is the third.</li>
+      </ul>
     </section>
     <footer>
       <a href="index.html" class="btn btn-primary">Home Page</a>
