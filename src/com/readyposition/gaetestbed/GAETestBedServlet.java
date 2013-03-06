@@ -1,6 +1,8 @@
 package com.readyposition.gaetestbed;
 
 import java.io.IOException;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
 import org.slf4j.Logger;
@@ -12,10 +14,9 @@ public class GAETestBedServlet extends HttpServlet {
             LoggerFactory.getLogger(GAETestBedServlet.class);
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException
+            throws IOException, ServletException
     {
         logger.info("SLF4J logger works!");
-        resp.setContentType("text/plain");
-        resp.getWriter().println("Hello, world");
+        req.getRequestDispatcher("HelloWorld.ftl").forward(req, resp); 
     }
 }
