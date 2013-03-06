@@ -14,9 +14,10 @@ public class GAETestBedServlet extends HttpServlet {
             LoggerFactory.getLogger(GAETestBedServlet.class);
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException, ServletException
+        throws IOException, ServletException
     {
         logger.info("SLF4J logger works!");
+        req.setAttribute("clown", "Bozo");
         req.getRequestDispatcher("HelloWorld.ftl").forward(req, resp); 
     }
 }
