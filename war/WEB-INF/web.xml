@@ -21,6 +21,17 @@
     <servlet-name>LowLevelDatastore</servlet-name>
     <url-pattern>/lowleveldatastore</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>Channel</servlet-name>
+    <servlet-class>com.readyposition.gaetestbed.ChannelServlet
+    </servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>Channel</servlet-name>
+    <url-pattern>/channel</url-pattern>
+  </servlet-mapping>
   
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
