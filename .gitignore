@@ -10,6 +10,10 @@ build/
 # ignore eclipse build artifacts
 bin/
 war/WEB-INF/classes/com/
+.apt_generated/
+# ignore eclipse settings
+.settings/
+.factorypath
 # ignore GAE DevKit artifacts
 local_db.bin
 # ignore MacOSX Desktop Services Store files...
