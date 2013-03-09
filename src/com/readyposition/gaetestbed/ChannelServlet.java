@@ -31,15 +31,6 @@ public class ChannelServlet extends AbstractCommandServlet {
         req.getRequestDispatcher("Channel.ftl").forward(req, resp);
     }
 
-    protected static Command homeCommand = new Command() {
-        @Override
-        protected void doCommand(final HttpServletRequest req, final HttpServletResponse resp)
-                throws IOException, ServletException
-        {
-            resp.sendRedirect("."); // Default home page (index.html)
-        }
-    };
-
     static {
         dispatchTable.put("home", homeCommand);
     }
