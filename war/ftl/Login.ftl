@@ -7,6 +7,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <script src="js/jquery-1.9.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/Login.js"></script>
   </head>
   <body class="container">
     <header>

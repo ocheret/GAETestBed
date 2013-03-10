@@ -7,6 +7,8 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <script src="js/jquery-1.9.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/_ah/channel/jsapi"></script>
+    <script src="js/Channel.js"></script>
   </head>
   <body class="container">
     <header>
@@ -21,12 +23,11 @@
       <div class="row">
 	<div class="span12">
 	  <div class="well">
-	    <h2>Blah, blah, blah...</h2>
-	    <ul>
-	      <li><span class="label">One</span> is the first.</li>
-	      <li><span class="label">Two</span> is the second.</li>
-	      <li><span class="label">Three</span> is the third.</li>
-	    </ul>
+	    <button id="connect" class="btn btn-success">Connect</button>
+	    <button id="sender" class="btn btn-success">Send Message</button>
+	    <button id="clear" class="btn btn-warning">Clear Messages</button>
+	    <p><strong>Messages:</strong></p>
+	    <ul id="messages"></ul>
 	  </div>
 	</div>
       </div>
