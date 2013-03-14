@@ -1,3 +1,5 @@
-$("document").ready(function() {
-    $("#username").focus();
-});
+(function() {
+    $("document").ready(function() {
+	$("#username").focus();
+    });
+} ());

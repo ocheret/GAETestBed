@@ -7,6 +7,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <script src="js/jquery-1.9.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/json2-min.js"></script>
     <script type="text/javascript" src="/_ah/channel/jsapi"></script>
     <script src="js/Channel.js"></script>
   </head>
@@ -16,6 +17,25 @@
 	<div class="span12">
 	  <h1 class="well">Channel</h1>
 	  <p>Welcome, ${username!"whoever you are"}</p>
+	  <div class="well">
+	    <p>To play with the GAE Channel Service, you must first
+	      get a connection token from the service and initiate the
+	      connection, by clicking on the <span class="label
+	      label-success">Connect</span> button.  Once this
+	      succeeds you will be able to disconnect using
+	      the <span class="label
+	      label-important">Disconnect</span> button.  Connection
+	      progress details will appear in the
+	      <strong>Messages:</strong> area below.</p>
+	    <p>To trigger a message broadcast to all people visiting
+	      this page, click the <span class="label
+	      label-success">Send Message</span> button.  Messages
+	      received due to any broadcasts will appear in
+	      the <strong>Messages:</strong> area at the bottom.</p>
+	    <p>Clear the <strong>Messages:</strong> area by clicking
+	      on the <span class="label label-warning">Clear
+	      Messages</span> button.</p>
+	  </div>
 	</div>
       </div>
     </header>
@@ -26,7 +46,7 @@
 	    <button id="connect" class="btn btn-success">Connect</button>
 	    <button id="sender" class="btn btn-success">Send Message</button>
 	    <button id="clear" class="btn btn-warning">Clear Messages</button>
-	    <p><strong>Messages:</strong></p>
+	    <p><strong>Messages:</strong> (most recent on top)</p>
 	    <ul id="messages"></ul>
 	  </div>
 	</div>

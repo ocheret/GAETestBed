@@ -55,7 +55,8 @@
 
 	      <div class="control-group">
 		<div class="controls">
-		  <br><button type="submit" class="btn-success">Login</button>
+		  <br><button type="submit" class="btn btn-success">Login
+		  </button>
 		  <a href="." class="btn btn-primary">Home Page</a>
 		</div>
 	      </div>

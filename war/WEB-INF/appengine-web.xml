@@ -32,6 +32,10 @@
       http://code.google.com/appengine/docs/java/config/appconfig.html#Enabling_Sessions
   -->
 
+  <inbound-services>
+    <service>channel_presence</service>
+  </inbound-services>
+
   <static-files>
     <include path="/**.html" />
     <include path="/**.js" />
