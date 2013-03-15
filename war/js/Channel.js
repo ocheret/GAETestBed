@@ -1,4 +1,6 @@
 (function() {
+    var channel = null;
+    var socket = null;
     var msgCount = 0;
     var displayMessage = function (msg) {
 	msgCount++;
@@ -8,26 +10,74 @@
 	// XXX
 	displayMessage("Message");
     };
+    var openSocket = function(that) {
+	socket = channel.open({
+	    onopen: function() {
+		displayMessage("Socket opened");
+	    },
+	    onmessage: function(msg) {
+		// XXX
+		displayMessage(msg.data);
+	    },
+	    onerror: function(error) {
+		displayMessage("Error:" + error.code + "/" +
+			       error.description);
+		if (error.code == 401 || error.code == 0) {
+		    // The channel has timed out or is invalid
+		    shutdownConnection(that);
+		}
+	    },
+	    onclose: function() {
+		if (channel != null) {
+		    // If channel is null then we meant to close this
+		    openSocket(that);
+		} else {
+		    establishConnection(that);
+		}
+	    }
+	});
+    };
     var establishConnection = function (that) {
-	var stateTable = { Disconnect: "Connect", Connect: "Disconnect" };
-	$(that).toggleClass("btn-success").toggleClass("btn-danger");
-	$(that).text(stateTable[$(that).text()]);
-	var foo = { one: "won",
-		    two: "too",
-		    three: [1, 2, 3],
-		    four: new Date()
-		  };
-	displayMessage("JSON:" + JSON.stringify(foo));
-	displayMessage("$.param:" + $.param(foo));
-// Demonstrates which browsers can't parse ISO dates
-//	var da = (Date.parse("2013-03-11T02:43:38.688Z"));
-//	var db = (Date.parse("2013-03-11T02:43:38.688+0000"));
-//	displayMessage("da = " + da);
-//	displayMessage("db = " + db);
+	// Issue an AJAX call to get a connection token
+	$.ajax({
+	    type: "get",
+	    url: "channel?c=connect",
+	    dataType: "json",
+	    beforeSend: function() {
+		$(that).removeClass("btn-success").addClass("btn-warning")
+		    .text("Connecting...");
+	    }, // end beforeSend
+	    error: function(xhr, status, error) {
+		displayMessage("Connection error:"
+			       + status + "/" + xhr.status);
+		$(that).removeClass("btn-warning").addClass("btn-success")
+		    .text("Connect");
+	    }, // end error
+	    success: function(data, status, xhr) {
+		displayMessage("token = " + data.token);
+		channel = new goog.appengine.Channel(data.token);
+		openSocket();
+		$(that).removeClass("btn-warning").addClass("btn-danger")
+		    .text("Disconnect");
+	    } // end success
+	});
+    };
+    var shutdownConnection = function(that) {
+	channel = null;
+	delete socket.onerror;
+	delete socket.onclose;
+	socket.close();
+	socket = null;
+	$(that).removeClass("btn-danger").addClass("btn-success")
+	    .text("Connect");
     };
     $("document").ready(function() {
 	$("#connect").click(function() {
-	    establishConnection(this);
+	    if (socket == null) {
+		establishConnection(this);
+	    } else {
+		shutdownConnection(this);
+	    }
 	});
 	$("#sender").click(function() {
 	    sendMessage();
