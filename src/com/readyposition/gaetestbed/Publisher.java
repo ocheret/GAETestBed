@@ -77,7 +77,10 @@ public class Publisher {
      * @param msg the JSON message to send to all subscribers of the topic
      * (XXX - we should support non-JSON messages in the future)
      */
-    public void broadcastMessage(final String topicName, final String msg) {
+    public static void broadcastMessage(
+            final String topicName,
+            final String msg)
+    {
         // Fetch the topic in question
         final Topic topic = ofy().load().type(Topic.class).id(topicName).get();
         if (topic == null) {
@@ -118,7 +121,10 @@ public class Publisher {
      * @param topicName The name of the topic to subscribe to.
      * @param clientId The name of the client subscribing.
      */
-    public void subscribe(final String topicName, final String clientId) {
+    public static void subscribe(
+            final String topicName,
+            final String clientId)
+    {
         // Do this all within a cross group transaction
         ofy().transact(new VoidWork() {
             @Override
@@ -158,7 +164,10 @@ public class Publisher {
      * @param topicName the name of the topic to unsubscribe from.
      * @param clientId the client unsubscribing from the topic.
      */
-    public void unsubscribe(final String topicName, final String clientId) {
+    public static void unsubscribe(
+            final String topicName,
+            final String clientId)
+    {
         // Do this all within a cross group transaction
         ofy().transact(new VoidWork() {
             @Override
@@ -207,7 +216,7 @@ public class Publisher {
      * @param topicName the name of the topic.
      * @return an array of clientId's of subscribed clients
      */
-    public String[] getSubscribers(final String topicName) {
+    public static String[] getSubscribers(final String topicName) {
         final Topic topic =
                 ofy().load().type(Topic.class).id(topicName).get();
 
@@ -223,7 +232,7 @@ public class Publisher {
      * @param clientId the clientId of the subscriber.
      * @return an array of names of topics the client is subscribed to.
      */
-    public String[] getTopics(final String clientId) {
+    public static String[] getTopics(final String clientId) {
         final Subscriber sub =
                 ofy().load().type(Subscriber.class).id(clientId).get();
 
@@ -238,7 +247,7 @@ public class Publisher {
      * Remove all of a client's topic subscriptions.
      * @param clientId
      */
-    public void unsubscribeAll(final String clientId) {
+    public static void unsubscribeAll(final String clientId) {
         final Subscriber sub =
                 ofy().load().type(Subscriber.class).id(clientId).get();
 
