@@ -15,7 +15,7 @@ import com.google.appengine.api.channel.ChannelService;
 import com.google.appengine.api.channel.ChannelServiceFactory;
 
 @SuppressWarnings("serial")
-public abstract class ChannelPresenceServlet extends HttpServlet {
+public class ChannelPresenceServlet extends HttpServlet {
     final static Logger logger =
             LoggerFactory.getLogger(ChannelPresenceServlet.class);
 
