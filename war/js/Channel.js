@@ -57,10 +57,7 @@
 	    onerror: function(error) {
 		displayMessage("Error:" + error.code + "/" +
 			       error.description);
-		if (error.code == 401 || error.code == 0) {
-		    // The channel has timed out or is invalid
-		    shutdownConnection(that);
-		}
+		shutdownConnection(that);
 	    },
 	    onclose: function() {
 		if (channel != null) {
