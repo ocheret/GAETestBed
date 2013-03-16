@@ -95,7 +95,7 @@ public class Publisher {
 
         // Wrap the message to send in an array with the topic name as the
         // first element and the original payload as the second element.
-        final String topicMsg = "[\"" + topicName + "\"]," + msg + "]";
+        final String topicMsg = "[\"" + topicName + "\"," + msg + "]";
 
         // Send the enhanced payload to all subscribers and collect any
         // failed subscribers.

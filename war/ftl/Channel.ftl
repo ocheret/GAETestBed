@@ -44,8 +44,19 @@
 	<div class="span12">
 	  <div class="well">
 	    <button id="connect" class="btn btn-success">Connect</button>
-	    <button id="sender" class="btn btn-success">Send Message</button>
 	    <button id="clear" class="btn btn-warning">Clear Messages</button>
+	  </div>
+	</div>
+      </div>
+      <div class="row">
+	<div class="span12">
+	  <div class="well">
+	    <div class="form-inline">
+	      <button id="subscribe" class="btn btn-success">Subscribe</button>
+	      <input type="text" id="topic" placeholder="Topic"></input>
+	      <input type="text" id="message" placeholder="Message"></input>
+	      <button id="send" class="btn btn-success">Send Message</button>
+	    </div>
 	    <p><strong>Messages:</strong> (most recent on top)</p>
 	    <ul id="messages"></ul>
 	  </div>

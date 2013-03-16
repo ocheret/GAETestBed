@@ -48,8 +48,7 @@ public class ChannelServlet extends AbstractCommandServlet {
             final HttpSession session = req.getSession();
             final String clientId =
                     (String)session.getAttribute("username") +
-                    session.getCreationTime() +
-                    session.getId();
+                    ((new Date()).getTime() ^ session.getCreationTime());
             final ChannelService channelService =
                     ChannelServiceFactory.getChannelService();
             final String token = channelService.createChannel(clientId);
@@ -66,12 +65,78 @@ public class ChannelServlet extends AbstractCommandServlet {
             final ObjectMapper mapper = new ObjectMapper();
             mapper.configure(
                     SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+            resp.setContentType("application/json");
             mapper.writeValue(resp.getOutputStream(), map);
+        }
+    };
+
+    protected static Command subscribeCommand = new Command() {
+        @Override
+        protected void doCommand(
+                final HttpServletRequest req,
+                final HttpServletResponse resp)
+                        throws IOException, ServletException
+        {
+            final HttpSession session = req.getSession();
+            final String clientId = (String)session.getAttribute("clientId");
+            if (clientId == null) {
+                resp.sendError(HttpServletResponse.SC_UNAUTHORIZED,
+                        "Not connected to a channel.");
+                return;
+            }
+            final String topicName = req.getParameter("topic");
+            if (topicName == null) {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                        "Missing topic parameter.");
+                return;
+            }
+            Publisher.subscribe(topicName, clientId);
+
+            final HashMap<String, Object> map = new HashMap<String, Object>();
+            map.put("topic", topicName);
+            map.put("clientId", clientId);
+            final ObjectMapper mapper = new ObjectMapper();
+            resp.setContentType("application/json");
+            mapper.writeValue(resp.getOutputStream(), map);
+        }
+    };
+
+    protected static Command publishCommand = new Command() {
+        @Override
+        protected void doCommand(
+                final HttpServletRequest req,
+                final HttpServletResponse resp)
+                        throws IOException, ServletException
+        {
+            final String topicName = req.getParameter("topic");
+            if (topicName == null) {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                        "Missing topic parameter.");
+                return;
+            }
+
+            final String msg = req.getParameter("msg");
+            if (msg == null) {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST,
+                        "Missing msg parameter.");
+                return;
+            }
+
+            Publisher.broadcastMessage(topicName, msg);
+
+            final HashMap<String, Object> map = new HashMap<String, Object>();
+            map.put("topic", topicName);
+            final ObjectMapper mapper = new ObjectMapper();
+            resp.setContentType("application/json");
+            mapper.writeValue(resp.getOutputStream(), map);
+
         }
     };
 
     static {
         dispatchTable.put("home", homeCommand);
         dispatchTable.put("connect", connectCommand);
+        dispatchTable.put("subscribe", subscribeCommand);
+        dispatchTable.put("publish", publishCommand);
     }
 }

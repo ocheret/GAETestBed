@@ -4,11 +4,46 @@
     var msgCount = 0;
     var displayMessage = function (msg) {
 	msgCount++;
-	$("#messages").prepend("<li>" + msgCount + ": " + msg + "</li>");
+	var now = new Date();
+	$("#messages").prepend("<li>" + msgCount + ":" + now +
+			       ": " + msg + "</li>");
     };
     var sendMessage = function () {
-	// XXX
-	displayMessage("Message");
+	var topic = $("#topic").val();
+	var msg = $("#message").val();
+	$.ajax({
+	    type: "post",
+	    url: "channel?c=publish&topic=" + topic + "&msg=\"" + msg + "\"",
+	    dataType: "json",
+	    beforeSend: function() {
+		displayMessage("Sending to " + topic);
+	    }, // end beforeSend
+	    error: function(xhr, status, error) {
+		displayMessage("Send error:"
+			       + status + "/" + xhr.status);
+	    }, // end error
+	    success: function(data, status, xhr) {
+		displayMessage("Sent to " + topic);
+	    } // end success
+	});
+    };
+    var subscribe = function () {
+	var topic = $("#topic").val();
+	$.ajax({
+	    type: "post",
+	    url: "channel?c=subscribe&topic=" + topic,
+	    dataType: "json",
+	    beforeSend: function() {
+		displayMessage("Subscribing to " + topic);
+	    }, // end beforeSend
+	    error: function(xhr, status, error) {
+		displayMessage("Subscription error:"
+			       + status + "/" + xhr.status);
+	    }, // end error
+	    success: function(data, status, xhr) {
+		displayMessage("Subscribed to " + topic);
+	    } // end success
+	});
     };
     var openSocket = function(that) {
 	socket = channel.open({
@@ -17,7 +52,7 @@
 	    },
 	    onmessage: function(msg) {
 		// XXX
-		displayMessage(msg.data);
+		displayMessage("Received:" + msg.data);
 	    },
 	    onerror: function(error) {
 		displayMessage("Error:" + error.code + "/" +
@@ -40,7 +75,7 @@
     var establishConnection = function (that) {
 	// Issue an AJAX call to get a connection token
 	$.ajax({
-	    type: "get",
+	    type: "post",
 	    url: "channel?c=connect",
 	    dataType: "json",
 	    beforeSend: function() {
@@ -79,11 +114,14 @@
 		shutdownConnection(this);
 	    }
 	});
-	$("#sender").click(function() {
-	    sendMessage();
-	});
 	$("#clear").click(function() {
 	    $("#messages").html("");
+	});
+	$("#subscribe").click(function() {
+	    subscribe();
+	});
+	$("#send").click(function() {
+	    sendMessage();
 	});
     });
 } ());
